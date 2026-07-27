@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&amp;family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<style>
+  body { margin: 0; background: oklch(0.16 0.02 250); font-family: 'Inter', sans-serif; }
+  ::selection { background: oklch(0.85 0.17 195); color: oklch(0.16 0.02 250); }
+  a { color: oklch(0.85 0.17 195); text-decoration: none; }
+  a:hover { color: oklch(0.85 0.19 145); }
+  html { scroll-behavior: smooth; }
+  @keyframes fadeInUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes blink { 0%, 45% { opacity: 1; } 50%, 100% { opacity: 0; } }
+  .cursor-blink { animation: blink 1s step-end infinite; }
+  @keyframes floatOrb1 { 0%, 100% { transform: translate(0, 0) scale(1); } 50% { transform: translate(60px, 40px) scale(1.15); } }
+  @keyframes floatOrb2 { 0%, 100% { transform: translate(0, 0) scale(1); } 50% { transform: translate(-50px, -60px) scale(1.1); } }
+  @keyframes scanline { 0% { transform: translateY(-100%); } 100% { transform: translateY(100vh); } }
+  @keyframes orbPulse { 0%, 100% { opacity: 0.35; transform: translate(0, 0) scale(0.85); } 50% { opacity: 1; transform: translate(30px, -20px) scale(1.25); } }
+  .bg-orb-1 { position: fixed; top: -10%; left: -8%; width: 520px; height: 520px; border-radius: 50%; background: radial-gradient(circle, oklch(0.85 0.17 195 / 0.22), transparent 70%); filter: blur(40px); z-index: 0; pointer-events: none; animation: orbPulse 6s ease-in-out infinite; }
+  .bg-orb-2 { position: fixed; bottom: -12%; right: -6%; width: 460px; height: 460px; border-radius: 50%; background: radial-gradient(circle, oklch(0.85 0.19 145 / 0.2), transparent 70%); filter: blur(40px); z-index: 0; pointer-events: none; animation: orbPulse 7s ease-in-out infinite 1s; }
+  .site-content { position: relative; z-index: 1; }
+</style>
+</helmet>
+
+<div style="background: oklch(0.16 0.02 250); color: oklch(0.92 0.01 250); min-height: 100vh; overflow: hidden; position: relative;">
+<canvas ref="{{ setCanvasRef }}" style="position: fixed; inset: 0; z-index: 0; pointer-events: none;"></canvas>
+  <div class="bg-orb-1"></div>
+  <div class="bg-orb-2"></div>
+
+  <div class="site-content">
+  <nav style="position: sticky; top: 0; z-index: 50; display: flex; align-items: center; justify-content: space-between; padding: 18px 48px; background: oklch(0.16 0.02 250 / 0.85); backdrop-filter: blur(8px); border-bottom: 1px solid oklch(0.30 0.02 250);">
+    <div style="font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 16px; color: oklch(0.85 0.17 195);">JPF<span style="color: oklch(0.65 0.02 250);">.dev</span></div>
+    <div style="display: flex; gap: 28px; font-family: 'JetBrains Mono', monospace; font-size: 13px;">
+      <a href="#sobre-mi" style="color: oklch(0.85 0.01 250); transition: color 0.2s ease;" style-hover="color: oklch(0.85 0.17 195);">sobre-mi</a>
+      <a href="#proyectos" style="color: oklch(0.85 0.01 250); transition: color 0.2s ease;" style-hover="color: oklch(0.85 0.17 195);">proyectos</a>
+      <a href="#habilidades" style="color: oklch(0.85 0.01 250); transition: color 0.2s ease;" style-hover="color: oklch(0.85 0.17 195);">habilidades</a>
+      <a href="#experiencia" style="color: oklch(0.85 0.01 250); transition: color 0.2s ease;" style-hover="color: oklch(0.85 0.17 195);">experiencia</a>
+      <a href="#educacion" style="color: oklch(0.85 0.01 250); transition: color 0.2s ease;" style-hover="color: oklch(0.85 0.17 195);">educacion</a>
+      <a href="#contacto" style="color: oklch(0.85 0.01 250); transition: color 0.2s ease;" style-hover="color: oklch(0.85 0.17 195);">contacto</a>
+    </div>
+  </nav>
+
+  <section id="inicio" style="max-width: 1080px; margin: 0 auto; padding: 120px 48px 100px; display: flex; flex-direction: column; gap: 24px;">
+    <div style="font-family: 'JetBrains Mono', monospace; font-size: 14px; color: oklch(0.85 0.19 145); animation: fadeInUp 0.6s ease both;">$ whoami<span class="cursor-blink">_</span></div>
+    <h1 style="margin: 0; font-size: 56px; font-weight: 800; line-height: 1.1; animation: fadeInUp 0.6s ease 0.08s both;">Juan Pablo Franco</h1>
+    <p style="margin: 0; font-family: 'JetBrains Mono', monospace; font-size: 18px; color: oklch(0.85 0.17 195); max-width: 640px; animation: fadeInUp 0.6s ease 0.16s both;">Presales &amp; Solutions Engineer – Workato</p>
+    <p style="margin: 0; font-size: 17px; line-height: 1.7; color: oklch(0.75 0.015 250); max-width: 640px; animation: fadeInUp 0.6s ease 0.24s both;">Diseño e implemento integraciones, automatizaciones y agentes de IA sobre Workato — incluyendo integración con MCP — para clientes empresariales. Lidero demos técnicas, implementaciones y soporte de punta a punta.</p>
+    <div style="display: flex; gap: 16px; margin-top: 8px; animation: fadeInUp 0.6s ease 0.32s both;">
+      <a href="#proyectos" style="font-family: 'JetBrains Mono', monospace; font-size: 14px; padding: 12px 22px; border: 1px solid oklch(0.85 0.17 195); border-radius: 4px; color: oklch(0.85 0.17 195); transition: all 0.2s ease; display: inline-block;" style-hover="background: oklch(0.85 0.17 195); color: oklch(0.16 0.02 250); transform: translateY(-2px);">ver proyectos →</a>
+      <a href="#contacto" style="font-family: 'JetBrains Mono', monospace; font-size: 14px; padding: 12px 22px; color: oklch(0.75 0.015 250); transition: all 0.2s ease; display: inline-block;" style-hover="color: oklch(0.92 0.01 250); transform: translateY(-2px);">contactar</a>
+    </div>
+  </section>
+
+  <section id="sobre-mi" style="max-width: 1080px; margin: 0 auto; padding: 60px 48px; border-top: 1px solid oklch(0.30 0.02 250);">
+    <div style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: oklch(0.65 0.02 250); margin-bottom: 12px;">01 · Sobre mí</div>
+    <h2 style="margin: 0 0 20px; font-size: 30px; font-weight: 700;">Sobre mí</h2>
+    <p style="font-size: 16px; line-height: 1.8; color: oklch(0.75 0.015 250); max-width: 720px; margin: 0 0 20px;">Soy Ingeniero en Telecomunicaciones con más de tres años de experiencia en tecnología, telecomunicaciones e integración de soluciones. Me apasiona transformar retos técnicos complejos en procesos más simples, eficientes y escalables mediante automatización, APIs e inteligencia artificial.</p>
+    <p style="font-size: 16px; line-height: 1.8; color: oklch(0.75 0.015 250); max-width: 720px; margin: 0 0 20px;">Actualmente, ayudo a las organizaciones a diseñar e implementar arquitecturas de integración que conectan aplicaciones, datos y procesos de negocio. Participo en todo el ciclo de vida de las soluciones: desde el levantamiento de requerimientos y el diseño técnico, hasta la creación de pruebas de concepto, implementación, capacitación y onboarding del cliente.</p>
+    <p style="font-size: 16px; line-height: 1.8; color: oklch(0.75 0.015 250); max-width: 720px; margin: 0 0 20px;">Trabajo con el partner líder de Workato en LATAM, desarrollando soluciones basadas en iPaaS, gestión de APIs, automatización empresarial y Agentic AI. Mi enfoque es crear ecosistemas tecnológicos más inteligentes, dinámicos y autónomos, capaces de responder a las necesidades reales del negocio.</p>
+    <p style="font-size: 16px; line-height: 1.8; color: oklch(0.75 0.015 250); max-width: 720px; margin: 0 0 20px;">Mi experiencia previa en CPaaS y soluciones omnicanal —como Contact Center, WhatsApp Business API, SMS y RCS— me permite comprender de forma integral cómo las comunicaciones corporativas se conectan con aplicaciones, plataformas y sistemas empresariales.</p>
+    <p style="font-size: 16px; line-height: 1.8; color: oklch(0.75 0.015 250); max-width: 720px;">Me especializo en conectar la visión de negocio con la ejecución tecnológica, diseñando soluciones claras, escalables y de alto impacto que generen eficiencia operativa y valor tangible para las organizaciones.</p>
+  </section>
+
+  <section id="proyectos" style="max-width: 1080px; margin: 0 auto; padding: 60px 48px; border-top: 1px solid oklch(0.30 0.02 250);">
+    <div style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: oklch(0.65 0.02 250); margin-bottom: 12px;">02 · Proyectos</div>
+    <h2 style="margin: 0 0 32px; font-size: 30px; font-weight: 700;">Proyectos</h2>
+
+    <div style="border: 1px solid oklch(0.30 0.02 250); border-radius: 8px; overflow: hidden; background: oklch(0.19 0.02 250); transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;" style-hover="transform: translateY(-4px); border-color: oklch(0.85 0.17 195); box-shadow: 0 12px 32px oklch(0.10 0.02 250 / 0.5);">
+      <div style="padding: 28px 28px 0;">
+        <div style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: oklch(0.85 0.19 145); margin-bottom: 8px;">WORKATO · APOLLO · MCP · GOOGLE SHEETS</div>
+        <h3 style="margin: 0 0 6px; font-size: 22px; font-weight: 700;">SDR Agent: prospección y enriquecimiento con Workato + Apollo MCP</h3>
+        <div style="font-family: 'JetBrains Mono', monospace; font-size: 14px; color: oklch(0.85 0.17 195); margin-bottom: 14px;">De una solicitud en lenguaje natural a una lista de prospectos enriquecida y organizada en Google Sheets.</div>
+        <p style="font-size: 15px; line-height: 1.7; color: oklch(0.75 0.015 250); max-width: 700px; margin: 0 0 16px;">Agente de IA que busca empresas, identifica decisores, enriquece contactos y organiza los resultados automáticamente para acelerar la prospección B2B. El usuario describe en lenguaje natural criterios como industria, país, tamaño de empresa y cargos objetivo; el agente consulta Apollo mediante MCP, presenta empresas y perfiles encontrados, prioriza contactos como CIO, CTO, vicepresidentes y directores, enriquece la información profesional del contacto seleccionado y carga los resultados estructurados en Google Sheets.</p>
+        <p style="font-size: 14px; line-height: 1.7; color: oklch(0.65 0.02 250); max-width: 700px; margin: 0 0 16px;">Resuelve el trabajo manual de buscar empresas, identificar decisores, revisar y enriquecer perfiles, y copiar información entre plataformas — que retrasa el inicio de campañas comerciales. El agente concentra el proceso en una sola conversación: interpreta la solicitud, usa herramientas externas, procesa resultados y ejecuta acciones, entregando al equipo comercial una lista centralizada y estructurada de empresas y contactos lista para revisión, segmentación o campañas outbound.</p>
+        <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 24px;">
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; padding: 4px 10px; border: 1px solid oklch(0.30 0.02 250); border-radius: 20px; color: oklch(0.75 0.015 250); transition: all 0.2s ease;" style-hover="border-color: oklch(0.85 0.17 195); color: oklch(0.85 0.17 195);">Workato</span>
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; padding: 4px 10px; border: 1px solid oklch(0.30 0.02 250); border-radius: 20px; color: oklch(0.75 0.015 250); transition: all 0.2s ease;" style-hover="border-color: oklch(0.85 0.17 195); color: oklch(0.85 0.17 195);">Workato AI Agents</span>
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; padding: 4px 10px; border: 1px solid oklch(0.30 0.02 250); border-radius: 20px; color: oklch(0.75 0.015 250); transition: all 0.2s ease;" style-hover="border-color: oklch(0.85 0.17 195); color: oklch(0.85 0.17 195);">Apollo</span>
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; padding: 4px 10px; border: 1px solid oklch(0.30 0.02 250); border-radius: 20px; color: oklch(0.75 0.015 250); transition: all 0.2s ease;" style-hover="border-color: oklch(0.85 0.17 195); color: oklch(0.85 0.17 195);">MCP</span>
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; padding: 4px 10px; border: 1px solid oklch(0.30 0.02 250); border-radius: 20px; color: oklch(0.75 0.015 250); transition: all 0.2s ease;" style-hover="border-color: oklch(0.85 0.17 195); color: oklch(0.85 0.17 195);">Google Sheets</span>
+        </div>
+      </div>
+      <div style="position: relative; width: 100%; aspect-ratio: 16/9; background: oklch(0.12 0.02 250);">
+        <iframe src="https://www.youtube-nocookie.com/embed/ShPoXyQ4ttE" title="SDR Agent - Prospección y enriquecimiento con Workato + Apollo MCP" referrerpolicy="strict-origin-when-cross-origin" style="position: absolute; inset: 0; width: 100%; height: 100%; border: 0;" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen=""></iframe>
+      </div>
+    </div>
+
+    <div style="border: 1px solid oklch(0.30 0.02 250); border-radius: 8px; overflow: hidden; background: oklch(0.19 0.02 250); margin-top: 28px; transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;" style-hover="transform: translateY(-4px); border-color: oklch(0.85 0.17 195); box-shadow: 0 12px 32px oklch(0.10 0.02 250 / 0.5);">
+      <div style="padding: 28px 28px 0;">
+        <div style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: oklch(0.85 0.19 145); margin-bottom: 8px;">WORKATO · AWS EC2</div>
+        <h3 style="margin: 0 0 10px; font-size: 22px; font-weight: 700;">Agente de IA para auditoría y gestión de seguridad en EC2</h3>
+        <p style="font-size: 15px; line-height: 1.7; color: oklch(0.75 0.015 250); max-width: 700px; margin: 0 0 20px;">Agente construido en Workato que audita configuraciones de seguridad de instancias EC2 en AWS, corrige hallazgos automáticamente y crea nuevas instancias según políticas definidas — reduciendo intervención manual en tareas recurrentes de seguridad y aprovisionamiento.</p>
+        <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 24px;">
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; padding: 4px 10px; border: 1px solid oklch(0.30 0.02 250); border-radius: 20px; color: oklch(0.75 0.015 250); transition: all 0.2s ease;" style-hover="border-color: oklch(0.85 0.17 195); color: oklch(0.85 0.17 195);">Workato</span>
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; padding: 4px 10px; border: 1px solid oklch(0.30 0.02 250); border-radius: 20px; color: oklch(0.75 0.015 250); transition: all 0.2s ease;" style-hover="border-color: oklch(0.85 0.17 195); color: oklch(0.85 0.17 195);">AWS EC2</span>
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; padding: 4px 10px; border: 1px solid oklch(0.30 0.02 250); border-radius: 20px; color: oklch(0.75 0.015 250); transition: all 0.2s ease;" style-hover="border-color: oklch(0.85 0.17 195); color: oklch(0.85 0.17 195);">Agentes de IA</span>
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; padding: 4px 10px; border: 1px solid oklch(0.30 0.02 250); border-radius: 20px; color: oklch(0.75 0.015 250); transition: all 0.2s ease;" style-hover="border-color: oklch(0.85 0.17 195); color: oklch(0.85 0.17 195);">Seguridad</span>
+        </div>
+      </div>
+      <div style="position: relative; width: 100%; aspect-ratio: 16/9; background: oklch(0.12 0.02 250);">
+        <iframe src="https://www.youtube-nocookie.com/embed/kBsZ7qM9qec" title="Agente de IA - Auditoría de seguridad EC2" referrerpolicy="strict-origin-when-cross-origin" style="position: absolute; inset: 0; width: 100%; height: 100%; border: 0;" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen=""></iframe>
+      </div>
+    </div>
+
+    <div style="border: 1px solid oklch(0.30 0.02 250); border-radius: 8px; overflow: hidden; background: oklch(0.19 0.02 250); margin-top: 28px; transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;" style-hover="transform: translateY(-4px); border-color: oklch(0.85 0.17 195); box-shadow: 0 12px 32px oklch(0.10 0.02 250 / 0.5);">
+      <div style="padding: 28px 28px 0;">
+        <div style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: oklch(0.85 0.19 145); margin-bottom: 8px;">WORKATO · AWS S3 · MCP · CLAUDE</div>
+        <h3 style="margin: 0 0 10px; font-size: 22px; font-weight: 700;">Agente de corrección automática de buckets S3 expuestos</h3>
+        <p style="font-size: 15px; line-height: 1.7; color: oklch(0.75 0.015 250); max-width: 700px; margin: 0 0 16px;">Agente que se conecta a AWS S3, detecta buckets con acceso público expuesto y los corrige automáticamente. El video muestra dos formas de ejecutarlo: primero como flujo nativo dentro de Workato, y después el mismo agente integrado por MCP (Model Context Protocol) a Claude, operando fuera de Workato con el mismo resultado.</p>
+        <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 24px;">
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; padding: 4px 10px; border: 1px solid oklch(0.30 0.02 250); border-radius: 20px; color: oklch(0.75 0.015 250); transition: all 0.2s ease;" style-hover="border-color: oklch(0.85 0.17 195); color: oklch(0.85 0.17 195);">Workato</span>
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; padding: 4px 10px; border: 1px solid oklch(0.30 0.02 250); border-radius: 20px; color: oklch(0.75 0.015 250); transition: all 0.2s ease;" style-hover="border-color: oklch(0.85 0.17 195); color: oklch(0.85 0.17 195);">AWS S3</span>
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; padding: 4px 10px; border: 1px solid oklch(0.30 0.02 250); border-radius: 20px; color: oklch(0.75 0.015 250); transition: all 0.2s ease;" style-hover="border-color: oklch(0.85 0.17 195); color: oklch(0.85 0.17 195);">MCP</span>
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; padding: 4px 10px; border: 1px solid oklch(0.30 0.02 250); border-radius: 20px; color: oklch(0.75 0.015 250); transition: all 0.2s ease;" style-hover="border-color: oklch(0.85 0.17 195); color: oklch(0.85 0.17 195);">Claude</span>
+        </div>
+      </div>
+      <div style="position: relative; width: 100%; aspect-ratio: 16/9; background: oklch(0.12 0.02 250);">
+        <iframe src="https://www.youtube-nocookie.com/embed/vmiuK8LOZts" title="Agente de IA - Corrección de buckets S3 expuestos" referrerpolicy="strict-origin-when-cross-origin" style="position: absolute; inset: 0; width: 100%; height: 100%; border: 0;" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen=""></iframe>
+      </div>
+    </div>
+
+    <div style="border: 1px solid oklch(0.30 0.02 250); border-radius: 8px; overflow: hidden; background: oklch(0.19 0.02 250); margin-top: 28px; transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;" style-hover="transform: translateY(-4px); border-color: oklch(0.85 0.17 195); box-shadow: 0 12px 32px oklch(0.10 0.02 250 / 0.5);">
+      <div style="padding: 28px 28px 0;">
+        <div style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: oklch(0.85 0.19 145); margin-bottom: 8px;">WORKATO GENIE · POWER BI · MS TEAMS · DAX</div>
+        <h3 style="margin: 0 0 10px; font-size: 22px; font-weight: 700;">Consulta conversacional de datos de Power BI con Agentes de Workato<br></h3>
+        <p style="font-size: 15px; line-height: 1.7; color: oklch(0.75 0.015 250); max-width: 700px; margin: 0 0 16px;">Solución que permite consultar información de Power BI desde una app personalizada de Microsoft Teams usando lenguaje natural. Teams actúa como interfaz de conversación; Workato Genie interpreta la intención y selecciona una skill, que ejecuta una receta de Workato con la lógica de integración y validaciones. Workato se conecta al modelo semántico vía la Power BI REST API y ejecuta consultas DAX para obtener métricas, comparaciones o desgloses, y Genie devuelve la respuesta en lenguaje natural dentro de Teams.</p>
+        <p style="font-size: 14px; line-height: 1.7; color: oklch(0.65 0.02 250); max-width: 700px; margin: 0 0 16px;">Power BI sigue siendo la fuente de datos y visualización; Workato es la capa de integración y ejecución. El objetivo es reducir la navegación manual por dashboards para consultas recurrentes, con capacidades delimitadas por las skills configuradas en Workato.</p>
+        <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 24px;">
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; padding: 4px 10px; border: 1px solid oklch(0.30 0.02 250); border-radius: 20px; color: oklch(0.75 0.015 250); transition: all 0.2s ease;" style-hover="border-color: oklch(0.85 0.17 195); color: oklch(0.85 0.17 195);">Workato Genie</span>
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; padding: 4px 10px; border: 1px solid oklch(0.30 0.02 250); border-radius: 20px; color: oklch(0.75 0.015 250); transition: all 0.2s ease;" style-hover="border-color: oklch(0.85 0.17 195); color: oklch(0.85 0.17 195);">Power BI</span>
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; padding: 4px 10px; border: 1px solid oklch(0.30 0.02 250); border-radius: 20px; color: oklch(0.75 0.015 250); transition: all 0.2s ease;" style-hover="border-color: oklch(0.85 0.17 195); color: oklch(0.85 0.17 195);">MS Teams</span>
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; padding: 4px 10px; border: 1px solid oklch(0.30 0.02 250); border-radius: 20px; color: oklch(0.75 0.015 250); transition: all 0.2s ease;" style-hover="border-color: oklch(0.85 0.17 195); color: oklch(0.85 0.17 195);">DAX</span>
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; padding: 4px 10px; border: 1px solid oklch(0.30 0.02 250); border-radius: 20px; color: oklch(0.75 0.015 250); transition: all 0.2s ease;" style-hover="border-color: oklch(0.85 0.17 195); color: oklch(0.85 0.17 195);">REST API</span>
+        </div>
+      </div>
+      <div style="position: relative; width: 100%; aspect-ratio: 16/9; background: oklch(0.12 0.02 250);">
+        <iframe src="https://www.youtube-nocookie.com/embed/YZJGbn_b_G4" title="Consulta conversacional de Power BI con Workato Genie" referrerpolicy="strict-origin-when-cross-origin" style="position: absolute; inset: 0; width: 100%; height: 100%; border: 0;" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen=""></iframe>
+      </div>
+    </div>
+  </section>
+
+  <section id="habilidades" style="max-width: 1080px; margin: 0 auto; padding: 60px 48px; border-top: 1px solid oklch(0.30 0.02 250);">
+    <div style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: oklch(0.65 0.02 250); margin-bottom: 12px;">03 · Habilidades</div>
+    <h2 style="margin: 0 0 32px; font-size: 30px; font-weight: 700;">Habilidades técnicas</h2>
+    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;">
+      <div style="border: 1px solid oklch(0.30 0.02 250); border-radius: 8px; padding: 20px; background: oklch(0.19 0.02 250); transition: transform 0.25s ease, border-color 0.25s ease;" style-hover="transform: translateY(-3px); border-color: oklch(0.85 0.17 195);">
+        <div style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: oklch(0.85 0.17 195); margin-bottom: 10px;">Integración &amp; Automatización</div>
+        <div style="font-size: 14px; color: oklch(0.75 0.015 250); line-height: 1.8;">Workato · n8n · Make · Power Automate · iPaaS · Automatizaciones de procesos</div>
+      </div>
+      <div style="border: 1px solid oklch(0.30 0.02 250); border-radius: 8px; padding: 20px; background: oklch(0.19 0.02 250); transition: transform 0.25s ease, border-color 0.25s ease;" style-hover="transform: translateY(-3px); border-color: oklch(0.85 0.17 195);">
+        <div style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: oklch(0.85 0.17 195); margin-bottom: 10px;">IA &amp; Agentes</div>
+        <div style="font-size: 14px; color: oklch(0.75 0.015 250); line-height: 1.8;">Agentes de IA · MCP · Integración con modelos</div>
+      </div>
+      <div style="border: 1px solid oklch(0.30 0.02 250); border-radius: 8px; padding: 20px; background: oklch(0.19 0.02 250); transition: transform 0.25s ease, border-color 0.25s ease;" style-hover="transform: translateY(-3px); border-color: oklch(0.85 0.17 195);">
+        <div style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: oklch(0.85 0.17 195); margin-bottom: 10px;">Cloud</div>
+        <div style="font-size: 14px; color: oklch(0.75 0.015 250); line-height: 1.8;">AWS · EC2 · Seguridad en la nube</div>
+      </div>
+      <div style="border: 1px solid oklch(0.30 0.02 250); border-radius: 8px; padding: 20px; background: oklch(0.19 0.02 250); transition: transform 0.25s ease, border-color 0.25s ease;" style-hover="transform: translateY(-3px); border-color: oklch(0.85 0.17 195);">
+        <div style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: oklch(0.85 0.17 195); margin-bottom: 10px;">Cliente &amp; Delivery</div>
+        <div style="font-size: 14px; color: oklch(0.75 0.015 250); line-height: 1.8;">Presentaciones técnicas · Demos · Implementación</div>
+      </div>
+      <div style="border: 1px solid oklch(0.30 0.02 250); border-radius: 8px; padding: 20px; background: oklch(0.19 0.02 250); transition: transform 0.25s ease, border-color 0.25s ease;" style-hover="transform: translateY(-3px); border-color: oklch(0.85 0.17 195);">
+        <div style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: oklch(0.85 0.17 195); margin-bottom: 10px;">Soporte</div>
+        <div style="font-size: 14px; color: oklch(0.75 0.015 250); line-height: 1.8;">Soporte post-implementación · Troubleshooting</div>
+      </div>
+      <div style="border: 1px solid oklch(0.30 0.02 250); border-radius: 8px; padding: 20px; background: oklch(0.19 0.02 250); transition: transform 0.25s ease, border-color 0.25s ease;" style-hover="transform: translateY(-3px); border-color: oklch(0.85 0.17 195);">
+        <div style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: oklch(0.85 0.17 195); margin-bottom: 10px;">Liderazgo técnico</div>
+        <div style="font-size: 14px; color: oklch(0.75 0.015 250); line-height: 1.8;">Arquitectura de soluciones · Mentoría</div>
+      </div>
+      <div style="border: 1px solid oklch(0.30 0.02 250); border-radius: 8px; padding: 20px; background: oklch(0.19 0.02 250); transition: transform 0.25s ease, border-color 0.25s ease;" style-hover="transform: translateY(-3px); border-color: oklch(0.85 0.17 195);">
+        <div style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: oklch(0.85 0.17 195); margin-bottom: 10px;">APIs</div>
+        <div style="font-size: 14px; color: oklch(0.75 0.015 250); line-height: 1.8;">REST · SOAP · Webhooks · Autenticación OAuth</div>
+      </div>
+      <div style="border: 1px solid oklch(0.30 0.02 250); border-radius: 8px; padding: 20px; background: oklch(0.19 0.02 250); transition: transform 0.25s ease, border-color 0.25s ease;" style-hover="transform: translateY(-3px); border-color: oklch(0.85 0.17 195);">
+        <div style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: oklch(0.85 0.17 195); margin-bottom: 10px;">Mensajería &amp; Voz</div>
+        <div style="font-size: 14px; color: oklch(0.75 0.015 250); line-height: 1.8;">WhatsApp · Chatbots inteligentes · IVR · SIP</div>
+      </div>
+      <div style="border: 1px solid oklch(0.30 0.02 250); border-radius: 8px; padding: 20px; background: oklch(0.19 0.02 250); transition: transform 0.25s ease, border-color 0.25s ease;" style-hover="transform: translateY(-3px); border-color: oklch(0.85 0.17 195);">
+        <div style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: oklch(0.85 0.17 195); margin-bottom: 10px;">Contact Center as a Service</div>
+        <div style="font-size: 14px; color: oklch(0.75 0.015 250); line-height: 1.8;">BrightPattern · Genesys · Creación de centros de contacto · Aprovisionamiento de espacios de trabajo · Configuración de flujos conversacionales</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="experiencia" style="max-width: 1080px; margin: 0 auto; padding: 60px 48px; border-top: 1px solid oklch(0.30 0.02 250);">
+    <div style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: oklch(0.65 0.02 250); margin-bottom: 12px;">04 · Experiencia</div>
+    <h2 style="margin: 0 0 32px; font-size: 30px; font-weight: 700;">Experiencia laboral</h2>
+    <div style="display: flex; gap: 24px; padding: 24px 0; border-bottom: 1px solid oklch(0.30 0.02 250);">
+      <div style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: oklch(0.65 0.02 250); width: 140px; flex-shrink: 0;">nov. 2025 — actualidad</div>
+      <div>
+        <div style="font-size: 17px; font-weight: 700;">Presales &amp; Solutions Engineer – Workato</div>
+        <div style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: oklch(0.85 0.17 195); margin-top: 6px;">Chakray Consulting · Jornada completa</div>
+        <div style="font-size: 13px; color: oklch(0.65 0.02 250); margin-top: 4px;">Área metropolitana de Ciudad de México · Híbrido</div>
+        <ul style="font-size: 14px; color: oklch(0.75 0.015 250); margin: 14px 0 0; padding-left: 18px; line-height: 1.8;">
+          <li>Diseño arquitecturas de integración y automatización empresarial utilizando Workato, APIs, iPaaS y soluciones de Agentic AI.</li>
+          <li>Lidero sesiones de discovery y análisis de requerimientos para transformar necesidades de negocio en soluciones técnicas viables, escalables y alineadas con los objetivos del cliente.</li>
+          <li>Desarrollo demostraciones, pruebas de concepto y casos de uso para validar la viabilidad, el alcance y el impacto de las soluciones propuestas.</li>
+          <li>Brindo acompañamiento técnico en procesos de preventa, RFPs, estimaciones, dimensionamiento y elaboración de propuestas técnico-comerciales.</li>
+          <li>Participo en la implementación, onboarding y capacitación de clientes, facilitando la adopción y sostenibilidad de las soluciones.</li>
+          <li>Integro aplicaciones, datos y procesos mediante APIs, conectores, automatizaciones y agentes de inteligencia artificial.</li>
+        </ul>
+      </div>
+    </div>
+    <div style="display: flex; gap: 24px; padding: 24px 0; border-bottom: 1px solid oklch(0.30 0.02 250);">
+      <div style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: oklch(0.65 0.02 250); width: 140px; flex-shrink: 0;">ene. 2024 — nov. 2025</div>
+      <div>
+        <div style="font-size: 17px; font-weight: 700;">Solutions Engineer – Omnichannel &amp; Contact Center Solutions</div>
+        <div style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: oklch(0.85 0.17 195); margin-top: 6px;">C3NTRO Telecom · Jornada completa</div>
+        <div style="font-size: 13px; color: oklch(0.65 0.02 250); margin-top: 4px;">Ciudad de México, México</div>
+        <ul style="font-size: 14px; color: oklch(0.75 0.015 250); margin: 14px 0 0; padding-left: 18px; line-height: 1.8;">
+          <li>Diseñé arquitecturas de soluciones basadas en CPaaS, mensajería empresarial —SMS, RCS y WhatsApp Business API—, telefonía y plataformas de Contact Center.</li>
+          <li>Analicé requerimientos técnicos y funcionales para construir propuestas alineadas con las necesidades operativas y comerciales de los clientes.</li>
+          <li>Elaboré diagramas de arquitectura, flujos de comunicación y definiciones de integración entre canales, aplicaciones y sistemas empresariales.</li>
+          <li>Alineé las necesidades de negocio con las capacidades tecnológicas disponibles para diseñar soluciones escalables, seguras y de alto impacto.</li>
+          <li>Participé en demostraciones, pruebas de concepto y acompañamiento técnico durante procesos de evaluación e implementación.</li>
+          <li>Elaboré documentación técnica, fichas de producto y contenido de apoyo para propuestas técnico-comerciales.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="educacion" style="max-width: 1080px; margin: 0 auto; padding: 60px 48px; border-top: 1px solid oklch(0.30 0.02 250);">
+    <div style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: oklch(0.65 0.02 250); margin-bottom: 12px;">05 · Educación</div>
+    <h2 style="margin: 0 0 32px; font-size: 30px; font-weight: 700;">Educación</h2>
+    <div style="display: flex; gap: 24px; padding: 24px 0; border-bottom: 1px solid oklch(0.30 0.02 250);">
+      <div style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: oklch(0.65 0.02 250); width: 140px; flex-shrink: 0;">ago. 2019 — dic. 2023</div>
+      <div>
+        <div style="font-size: 17px; font-weight: 700;">Universidad Autónoma del Estado de Hidalgo</div>
+        <div style="font-size: 14px; color: oklch(0.75 0.015 250); margin-top: 8px;">Ingeniería, Ingeniería en Telecomunicaciones</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contacto" style="max-width: 1080px; margin: 0 auto; padding: 60px 48px 100px; border-top: 1px solid oklch(0.30 0.02 250);">
+    <div style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: oklch(0.65 0.02 250); margin-bottom: 12px;">06 · Contacto</div>
+    <h2 style="margin: 0 0 20px; font-size: 30px; font-weight: 700;">Hablemos</h2>
+    <p style="font-size: 16px; line-height: 1.7; color: oklch(0.75 0.015 250); max-width: 600px; margin: 0 0 28px;">¿Buscas un ingeniero para integraciones, automatizaciones o agentes de IA con Workato y AWS? Escríbeme.</p>
+    <div style="display: flex; gap: 24px; flex-wrap: wrap; font-family: 'JetBrains Mono', monospace; font-size: 15px;">
+      <a href="mailto:francohdz1108@gmail.com" style="border: 1px solid oklch(0.85 0.17 195); border-radius: 4px; padding: 12px 20px; color: oklch(0.85 0.17 195); transition: all 0.2s ease; display: inline-block;" style-hover="background: oklch(0.85 0.17 195); color: oklch(0.16 0.02 250); transform: translateY(-2px);">francohdz1108@gmail.com</a>
+      <a href="https://www.linkedin.com/in/juan-pablo-franco-b044782a2/" target="_blank" style="border: 1px solid oklch(0.30 0.02 250); border-radius: 4px; padding: 12px 20px; color: oklch(0.85 0.01 250); transition: all 0.2s ease; display: inline-block;" style-hover="border-color: oklch(0.85 0.17 195); transform: translateY(-2px);">LinkedIn ↗</a>
+    </div>
+  </section>
+
+  <footer style="text-align: center; padding: 28px; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: oklch(0.55 0.02 250); border-top: 1px solid oklch(0.30 0.02 250);">© 2026 Juan Pablo Franco</footer>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  setCanvasRef(el) {
+    if (!el || this._canvas) return;
+    this._canvas = el;
+    const ctx = el.getContext('2d');
+    const particles = [];
+    const COUNT = 70;
+    const LINK_DIST = 130;
+    let w, h;
+
+    const resize = () => {
+      w = el.width = window.innerWidth;
+      h = el.height = window.innerHeight;
+    };
+    resize();
+    window.addEventListener('resize', resize);
+    this._resizeHandler = resize;
+
+    for (let i = 0; i < COUNT; i++) {
+      particles.push({
+        x: Math.random() * w,
+        y: Math.random() * h,
+        vx: (Math.random() - 0.5) * 0.35,
+        vy: (Math.random() - 0.5) * 0.35,
+      });
+    }
+
+    const draw = () => {
+      ctx.clearRect(0, 0, w, h);
+      for (const p of particles) {
+        p.x += p.vx;
+        p.y += p.vy;
+        if (p.x < 0 || p.x > w) p.vx *= -1;
+        if (p.y < 0 || p.y > h) p.vy *= -1;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, 2, 0, Math.PI * 2);
+        ctx.fillStyle = 'oklch(0.85 0.17 195 / 0.55)';
+        ctx.fill();
+      }
+      for (let i = 0; i < particles.length; i++) {
+        for (let j = i + 1; j < particles.length; j++) {
+          const a = particles[i], b = particles[j];
+          const dx = a.x - b.x, dy = a.y - b.y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist < LINK_DIST) {
+            ctx.beginPath();
+            ctx.moveTo(a.x, a.y);
+            ctx.lineTo(b.x, b.y);
+            ctx.strokeStyle = `oklch(0.85 0.17 195 / ${0.18 * (1 - dist / LINK_DIST)})`;
+            ctx.lineWidth = 1;
+            ctx.stroke();
+          }
+        }
+      }
+      this._raf = requestAnimationFrame(draw);
+    };
+    draw();
+  }
+
+  componentWillUnmount() {
+    if (this._raf) cancelAnimationFrame(this._raf);
+    if (this._resizeHandler) window.removeEventListener('resize', this._resizeHandler);
+  }
+
+  renderVals() {
+    return { setCanvasRef: (el) => this.setCanvasRef(el) };
+  }
+}
+</script>
+</body>
+</html>
